@@ -10,6 +10,7 @@ import Image from "../Image/Image";
 import Suggestions from "../Search/Suggestions/Suggestions";
 import {API_KEY} from '../../constants/constants';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -97,6 +98,8 @@ const NavBar = () => {
               />
             )}
           ></Search>
+          <Link to="/">Home</Link>
+          <Link to="/special">Special</Link>
         </Toolbar>
       </AppBar>
     </div>

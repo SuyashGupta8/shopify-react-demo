@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     color: "#000",
     border: "1px solid #f2f2f2",
+    zIndex: "1000"
   },
   listItem: {
     borderBottom: "1px solid #f2f2f2",
