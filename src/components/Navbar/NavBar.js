@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -8,7 +8,8 @@ import Search from "../Search/Search";
 import logo from "../../Images/logo.png";
 import Image from "../Image/Image";
 import Suggestions from "../Search/Suggestions/Suggestions";
-
+import {API_KEY} from '../../constants/constants';
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -29,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NavBar = () => {
+  const suggestionContainer = useRef(null);
   const [deviceViewPort, setDeviceViewPort] = useState("visible");
   useEffect(() => {
     setDeviceViewPort(window.innerWidth > 600 ? "none" : "visible");
@@ -39,15 +41,34 @@ const NavBar = () => {
       window.removeEventListener("resize", handlerResize);
     };
   }, [deviceViewPort]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside, false);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, false);
+    };
+  }, []);
+
+  const handleClickOutside = (e) =>{
+    if(!suggestionContainer.current.contains(e.target)){
+        setSearchValue("");
+    }
+  }
+
   const classes = useStyles();
 
   const [searchValue, setSearchValue] = useState("");
+  const [suggestionData, setSuggestionData] = useState([]);
 
   const onChangeSearchHandler = (e) => {
     const value = e.target.value;
     setSearchValue(value);
-  }
-  
+    axios.get(`https://dummyproducts-api.herokuapp.com/api/v1/products/search?term=${value}&apikey=${API_KEY}&limit=10`).then((d)=>{
+        setSuggestionData(d.data.data);
+    }).catch((e)=>{
+        console.log(e);
+    })
+  };
 
   return (
     <div className={classes.root}>
@@ -68,7 +89,12 @@ const NavBar = () => {
             value={searchValue}
             onChangeSearchHandler={onChangeSearchHandler}
             suggestions={(width, isVisible) => (
-              <Suggestions width={width} isVisible={isVisible} />
+              <Suggestions
+                width={width}
+                isVisible={isVisible}
+                suggestionContainer={suggestionContainer}
+                suggestionData={suggestionData}
+              />
             )}
           ></Search>
         </Toolbar>
