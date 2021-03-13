@@ -14,7 +14,6 @@ function App() {
           <Route path="/" exact component={TopRated}></Route>
           <Route path="/special" exact component={Category}></Route>
         </Switch>
-        
       </Layout>
     </div>
     </Router>

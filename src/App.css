@@ -1,0 +1,15 @@
+.AppBarLink{
+    display: inline-block;
+    list-style: none;
+}
+.AppBarLink li{
+    display: inline-block;
+}
+.AppBarLink li a{
+    color:#fff;
+    padding:10px;
+    text-decoration: none;
+}
+.makeStyles-root-11 div {
+    margin: 5px;
+}

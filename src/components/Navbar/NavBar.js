@@ -98,8 +98,10 @@ const NavBar = () => {
               />
             )}
           ></Search>
-          <Link to="/">Home</Link>
-          <Link to="/special">Special</Link>
+          <ul className="AppBarLink">
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/special">Special</Link></li>
+          </ul>
         </Toolbar>
       </AppBar>
     </div>
