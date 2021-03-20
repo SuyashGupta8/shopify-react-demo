@@ -3,7 +3,7 @@ import Filter from "./Filter/Filter";
 
 const FilterSideBar = ({ value, onChangeHandler,onClearHandler }) => {
   const keys = Object.keys(value);
-
+  // This is the return statement
   return (
     <div>
       {keys.map((e, i) => {
